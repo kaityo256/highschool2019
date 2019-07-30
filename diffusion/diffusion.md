@@ -86,7 +86,7 @@ def simulation():
 ```py
 imgs = simulation()
 fig = plt.figure()
-im = plt.imshow(imgs[99], cmap="inferno",vmin = 0, vmax = 30)
+im = plt.imshow(imgs[-1], cmap="inferno",vmin = 0, vmax = 30)
 ```
 
 上記を実行して、なにか模様が出てくれば計算成功である。
