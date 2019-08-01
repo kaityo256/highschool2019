@@ -33,6 +33,27 @@ def get_bonds(qx, qy):
     return bonds
 
 
+def calculate(vx, vy, qx, qy):
+    n = len(vx)
+    dt = 0.01
+    G = 1.0
+    qx += vx * dt
+    qy += vy * dt
+    vy -= G * dt
+    for i in range(n):
+        if qy[i] < 0.0:
+            vy[i] -= 10.0*qy[i] * dt
+
+
+def simulate(qx, qy, bonds):
+    vx = np.zeros_like(qx)
+    vy = np.zeros_like(qx)
+    ymin = np.min(qy)
+    qy -= ymin
+    for _ in range(500):
+        calculate(vx, vy, qx, qy)
+
+
 def show_bonds(qx, qy, bonds):
     for i, j, _ in bonds:
         (xi, yi) = qx[i], qy[i]
@@ -43,6 +64,7 @@ def show_bonds(qx, qy, bonds):
 def main():
     qx, qy = get_atoms("スパコン")
     bonds = get_bonds(qx, qy)
+    simulate(qx, qy, bonds)
     show_bonds(qx, qy, bonds)
    # for x, y in atoms:
     #    print('{} {}'.format(x, y))
