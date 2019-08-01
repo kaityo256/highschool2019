@@ -64,7 +64,7 @@ def simulate(qx, qy, bonds):
     vy = np.zeros_like(qx)
     ymin = np.min(qy)
     qy -= ymin
-    for _ in range(500):
+    for _ in range(2000):
         calculate(vx, vy, qx, qy, bonds)
 
 
