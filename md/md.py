@@ -13,7 +13,7 @@ def get_atoms(text):
         for y in range(h):
             v = img.getpixel((x, y))
             if v is 0:
-                atoms.append([float(x), float(y)])
+                atoms.append([float(x), h - float(y)])
     return atoms
 
 
@@ -29,15 +29,17 @@ def get_bonds(atoms):
                 bonds.append((i, j, r2))
     return bonds
 
-
-def main():
-    atoms = get_atoms("日本語")
-    bonds = get_bonds(atoms)
+def show_bonds(atoms, bonds):
     for i, j, _ in bonds:
         (xi, yi) = atoms[i]
         (xj, yj) = atoms[j]
         print(xi, yi, (xj-xi), (yj-yi))
-    # for x, y in atoms:
+
+def main():
+    atoms = get_atoms("スパコン")
+    bonds = get_bonds(atoms)
+    show_bonds(atoms, bonds)
+   # for x, y in atoms:
     #    print('{} {}'.format(x, y))
 
 
