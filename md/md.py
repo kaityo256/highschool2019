@@ -33,16 +33,30 @@ def get_bonds(qx, qy):
     return bonds
 
 
-def calculate(vx, vy, qx, qy):
+def calculate(vx, vy, qx, qy, bonds):
     n = len(vx)
     dt = 0.01
-    G = 1.0
+    G = 0.1
+    K = 1000.0
+
     qx += vx * dt
     qy += vy * dt
+
+    for i, j, l in bonds:
+        dx = qx[j] - qx[i]
+        dy = qy[j] - qy[i]
+        r2 = dx ** 2 + dy ** 2
+        f = K * (r2 - l)
+        vx[i] += f*dx*dt
+        vy[i] += f*dy*dt
+        vx[j] -= f*dx*dt
+        vy[j] -= f*dy*dt
+
     vy -= G * dt
+
     for i in range(n):
         if qy[i] < 0.0:
-            vy[i] -= 10.0*qy[i] * dt
+            vy[i] -= 10.0 * qy[i] * dt
 
 
 def simulate(qx, qy, bonds):
@@ -51,7 +65,7 @@ def simulate(qx, qy, bonds):
     ymin = np.min(qy)
     qy -= ymin
     for _ in range(500):
-        calculate(vx, vy, qx, qy)
+        calculate(vx, vy, qx, qy, bonds)
 
 
 def show_bonds(qx, qy, bonds):
