@@ -1,5 +1,6 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 import numpy as np
+from numba import jit
 
 
 def get_atoms(text):
@@ -33,6 +34,7 @@ def get_bonds(qx, qy):
     return bonds
 
 
+@jit
 def calculate(vx, vy, qx, qy, bonds):
     n = len(vx)
     dt = 0.01
@@ -59,12 +61,13 @@ def calculate(vx, vy, qx, qy, bonds):
             vy[i] -= 10.0 * qy[i] * dt
 
 
+@jit
 def simulate(qx, qy, bonds):
     vx = np.zeros_like(qx)
     vy = np.zeros_like(qx)
-    ymin = np.min(qy)
-    qy -= ymin
-    for _ in range(2000):
+    for i in range(10000):
+        if i % 100 is 0:
+            save_img(qx, qy, i//100)
         calculate(vx, vy, qx, qy, bonds)
 
 
@@ -75,11 +78,28 @@ def show_bonds(qx, qy, bonds):
         print(xi, yi, (xj-xi), (yj-yi))
 
 
+@jit
+def save_img(qx, qy, i):
+    img = Image.new('RGB', (400, 100), 'white')
+    draw = ImageDraw.Draw(img)
+    qx2 = qx * 2
+    qy2 = qy * 2
+    for x, y in zip(qx2, qy2):
+        draw.ellipse((x, y, x + 2, y + 2), fill=(255, 0, 0))
+    img = ImageOps.flip(img)
+    filename = "img%03d.png" % i
+    img.save(filename)
+    print(filename)
+
+
 def main():
     qx, qy = get_atoms("スパコン")
+    ymin = np.min(qy)
+    qy -= ymin
     bonds = get_bonds(qx, qy)
     simulate(qx, qy, bonds)
-    show_bonds(qx, qy, bonds)
+    #show_bonds(qx, qy, bonds)
+    #save_img(qx, qy)
    # for x, y in atoms:
     #    print('{} {}'.format(x, y))
 
