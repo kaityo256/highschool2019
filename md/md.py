@@ -98,10 +98,6 @@ def main():
     qy -= ymin
     bonds = get_bonds(qx, qy)
     simulate(qx, qy, bonds)
-    #show_bonds(qx, qy, bonds)
-    #save_img(qx, qy)
-   # for x, y in atoms:
-    #    print('{} {}'.format(x, y))
 
 
 main()
