@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
+import numpy as np
 
 
 def get_atoms(text):
@@ -16,7 +17,7 @@ def get_atoms(text):
             if v is 0:
                 qx.append(float(x))
                 qy.append(h-float(y))
-    return qx, qy
+    return np.array(qx), np.array(qy)
 
 
 def get_bonds(qx, qy):
