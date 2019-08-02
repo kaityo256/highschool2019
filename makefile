@@ -1,11 +1,20 @@
 PANDOCOPT=--highlight-style tango --latex-engine=lualatex -V documentclass=ltjarticle -V geometry:margin=1in 
-MD=$(shell ls */*.md)
-PDF=$(MD:%.md=%.pdf)
+PDF=diffusion.pdf gray-scott.pdf logistic.pdf md.pdf
 
 
 TARGET=$(PDF)
 all: $(TARGET)
 
-%.pdf: %.md
+diffusion.pdf: diffusion/README.md
 	pandoc $< -s -o $@ $(PANDOCOPT)
+
+gray-scott.pdf: gray-scott/README.md
+	pandoc $< -s -o $@ $(PANDOCOPT)
+
+logistic.pdf: logistic/README.md
+	pandoc $< -s -o $@ $(PANDOCOPT)
+
+md.pdf: md/README.md
+	pandoc $< -s -o $@ $(PANDOCOPT)
+
 
