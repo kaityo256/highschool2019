@@ -17,8 +17,12 @@ def get_atoms(text):
             v = img.getpixel((x, y))
             if v is 0:
                 qx.append(float(x))
-                qy.append(h-float(y))
-    return np.array(qx), np.array(qy)
+                qy.append(h - float(y))
+    nx = np.array(qx)
+    ny = np.array(qy)
+    nx -= np.min(ny)
+    ny -= np.min(ny)
+    return nx, ny
 
 
 def get_bonds(qx, qy):
@@ -92,12 +96,15 @@ def save_img(qx, qy, i):
     print(filename)
 
 
+def get_img(qx, qy, w, h):
+
+
 def main():
     qx, qy = get_atoms("スパコン")
-    ymin = np.min(qy)
-    qy -= ymin
-    bonds = get_bonds(qx, qy)
-    simulate(qx, qy, bonds)
+    w = np.max(qx)
+    h = np.max(qy)
+    #bonds = get_bonds(qx, qy)
+    #simulate(qx, qy, bonds)
 
 
 main()
