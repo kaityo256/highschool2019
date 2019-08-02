@@ -1,6 +1,7 @@
-set term pngcairo size 1920, 400
+set term pngcairo transparent size 1920, 400
 set out "fig.png"
 set style arrow 1 nohead
+unset border
 unset key
 unset xtics
 unset ytics
