@@ -1,7 +1,6 @@
 PANDOCOPT=--highlight-style tango --latex-engine=lualatex -V documentclass=ltjarticle -V geometry:margin=1in 
 PDF=diffusion.pdf gray-scott.pdf logistic.pdf md.pdf
 
-
 TARGET=$(PDF)
 all: $(TARGET)
 
@@ -17,4 +16,5 @@ logistic.pdf: logistic/README.md
 md.pdf: md/README.md
 	pandoc $< -s -o $@ $(PANDOCOPT)
 
-
+clean:
+	rm -f $(PDF)
