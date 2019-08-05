@@ -96,9 +96,9 @@ def calculate(vx, vy, rx, ry, bonds):
 後の「写真」のために、原子の位置から画像を作る関数を作っておく。
 
 ```py
-def get_img(qx, qy, w, h):
+def get_img(rx, ry, w, h):
     img = np.zeros((h,w))
-    for x,y in zip(qx,qy):
+    for x,y in zip(rx,ry):
         x = int(x)
         y = int(y)
         if x in range(w) and y in range(h):
