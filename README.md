@@ -4,9 +4,8 @@
 
 これは2019年8月に慶應義塾大学理工学部で行われた、「高校生のための夏休み研究体験」の資料です。物理情報工学科渡辺研究室では「コンピュータシミュレーションをしてみよう」と題して、Pythonを使った数値シミュレーションを行いました。
 
-GitHubのリポジトリはこちらです。
-
-[https://github.com/kaityo256/highschool2019](https://github.com/kaityo256/highschool2019)
+* GitHubリポジトリ: [https://github.com/kaityo256/highschool2019](https://github.com/kaityo256/highschool2019)
+* ウェブ版: [https://kaityo256.github.io/highschool2019/](https://kaityo256.github.io/highschool2019/)
 
 ## 説明スライド
 
