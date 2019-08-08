@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+
+<style>
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+  }
+  img {width: 100%}
+
+  @media (max-width: 767px) {
+    .markdown-body {
+      padding: 15px;
+    }
+  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://kaityo256.github.io/python_zero/github-markdown.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<article class="markdown-body">
+<h1 id="夏休み研究体験2019">夏休み研究体験2019</h1>
+<h2 id="概要">概要</h2>
+<p>これは2019年8月に慶應義塾大学理工学部で行われた、「高校生のための夏休み研究体験」の資料です。物理情報工学科渡辺研究室では「コンピュータシミュレーションをしてみよう」と題して、Pythonを使った数値シミュレーションを行いました。</p>
+<p>GitHubのリポジトリはこちらです。</p>
+<p><a href="https://github.com/kaityo256/highschool2019" class="uri">https://github.com/kaityo256/highschool2019</a></p>
+<h2 id="説明スライド">説明スライド</h2>
+<p>最初に、コンピュータシミュレーションの概要について説明をしました。そのスライドは以下にアップロードしてあります。</p>
+<p><a href="https://speakerdeck.com/kaityo256/simulation-for-high-school-students">コンピュータシミュレーションをしてみよう</a></p>
+<h2 id="実習">実習</h2>
+<p>説明の後、テキストを配って、プログラムを入力、実行してもらいました。実WindowsマシンにAnacondaを入れ、Jupyter Notebook上で実行する形式です。</p>
+<p>行ったテーマは以下の4つです。</p>
+<ul>
+<li>テーマ1：<a href="diffusion/index.html">拡散方程式</a></li>
+<li>微分方程式を差分化して解いてみます。簡単な方程式の一つである拡散方程式(熱伝導方程式)をシミュレーションし、熱の伝わり方を観察します。</li>
+<li>テーマ2：<a href="gs/index.html">反応拡散方程式</a></li>
+<li>拡散に反応過程を追加してみます。周期的に振動する化学反応系と拡散が組み合わさることで、チューリング・パターンと呼ばれる不思議な模様が生まれます。</li>
+<li>テーマ3：<a href="logistic/index.html">ロジスティック・マップ</a></li>
+<li>ロジスティック・マップは生物の個体数の時間発展を表現する式です。非常に簡単な式であるにもかかわらず、その振る舞いは非常に複雑です。このように、簡単な式から予測困難な挙動が生まれる「カオス」を体験します。</li>
+<li>テーマ4：<a href="md/index.html">分子動力学法</a></li>
+<li>物体に力を加えると速度が変化します。それを記述するのがニュートンの運動方程式で、それを数値的に解く手法が分子動力学法です。バネとビーズで構造物を作り、そこに重力をかけるとどうなるか調べてみましょう。</li>
+<li>テーマ5: <a href="newton/index.html">ニュートン法とフラクタル</a></li>
+<li>方程式の解を求めるのに有効なニュートン法ですが、解が複素数の場合は不思議なことが起こります。ニュートン法が生み出すフラクタル図形を見てみましょう。</li>
+</ul>
+<h2 id="体験を終えて">体験を終えて</h2>
+<p>本当はテーマ4までしか用意してませんでしたが、想像以上に進度が早かったので急遽テーマ5を用意しました。内容はわからなくても、どれくらい組めばどのくらいのことが可能になるのかを実感してもらおうと、事前に用意したプログラムを「写経」してもらいました。入力ミスによりエラーが出たとき、そこから原因を探るのに苦労していたようです。初学者は写経から入るのがよい、と思っていましたが、やはり「組んでいるプログラムがどういうものかわからなかった」という感想が多かったため、もう少しプログラムの内容について説明した方がよかったかもしれません。</p>
+<h2 id="ライセンス">ライセンス</h2>
+<p>Copyright (C) 2019 Hiroshi Watanabe</p>
+<p>この文章と絵(pptxファイルを含む)はクリエイティブ・コモンズ 4.0 表示 (CC-BY 4.0)で提供します。</p>
+<p>This article and pictures are licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+<p>本リポジトリに含まれるプログラムは、<a href="https://opensource.org/licenses/MIT">MITライセンス</a>で提供します。</p>
+<p>The source codes in this repository are licensed under <a href="https://opensource.org/licenses/MIT">the MIT License</a>.</p>
+</article>
+</body>
+</html>

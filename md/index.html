@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+
+<style>
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+  }
+  img {width: 100%}
+
+  @media (max-width: 767px) {
+    .markdown-body {
+      padding: 15px;
+    }
+  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://kaityo256.github.io/python_zero/github-markdown.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<article class="markdown-body">
+<h1 id="テーマ4分子動力学法">テーマ4：分子動力学法</h1>
+<p><a href="../index.html">[Up]</a> <a href="https://github.com/kaityo256/highschool2019">[Repository]</a></p>
+<h2 id="目的">目的</h2>
+<p>プログラムで構造を作り、分子動力学法により時間発展させる。</p>
+<h2 id="プログラム">プログラム</h2>
+<p>新たなノートブックを開き、「md」という名前をつけて保存しよう。</p>
+<h3 id="最初のセル">最初のセル</h3>
+<p>最初のセルではライブラリをインポートする。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="im">from</span> PIL <span class="im">import</span> Image, ImageDraw, ImageFont
+<span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
+<span class="im">from</span> matplotlib <span class="im">import</span> animation, rc</code></pre></div>
+<h3 id="二番目のセル">二番目のセル</h3>
+<p>次に、文字列を受け取って、それを原子の座標に変換するコードを書く。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="kw">def</span> get_atoms(text, fontsize):
+    myfont <span class="op">=</span> ImageFont.truetype(<span class="st">&quot;ipaexg.ttf&quot;</span>, fontsize)
+    img <span class="op">=</span> Image.new(<span class="st">&#39;1&#39;</span>, (<span class="dv">200</span>, <span class="dv">200</span>), <span class="st">&#39;white&#39;</span>)
+    draw <span class="op">=</span> ImageDraw.Draw(img)
+    draw.text((<span class="dv">10</span>, <span class="dv">10</span>), text, font<span class="op">=</span>myfont)
+
+    w, h <span class="op">=</span> img.size
+    rx <span class="op">=</span> []
+    ry <span class="op">=</span> []
+    <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(w):
+        <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(h):
+            v <span class="op">=</span> img.getpixel((x, y))
+            <span class="cf">if</span> v <span class="kw">is</span> <span class="dv">0</span>:
+                rx.append(<span class="bu">float</span>(x))
+                ry.append(h <span class="op">-</span> <span class="bu">float</span>(y))
+    nx <span class="op">=</span> np.array(rx)
+    ny <span class="op">=</span> np.array(ry)
+    nx <span class="op">-=</span> np.<span class="bu">min</span>(nx)
+    ny <span class="op">-=</span> np.<span class="bu">min</span>(ny)
+    <span class="cf">return</span> nx, ny</code></pre></div>
+<p>なお、事前にIPAフォント<code>ipaexg.ttf</code>をカレントディレクトリに置いておく必要がある。</p>
+<h3 id="三番目のセル">三番目のセル</h3>
+<p>原子の座標を受け取り、近い原子同士をバネでつなぐ。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="kw">def</span> get_bonds(rx, ry):
+    n <span class="op">=</span> <span class="bu">len</span>(rx)
+    bonds <span class="op">=</span> []
+    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>):
+        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, n):
+            r2 <span class="op">=</span> (rx[i] <span class="op">-</span> rx[j]) <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> (ry[i] <span class="op">-</span> ry[j]) <span class="op">**</span> <span class="dv">2</span>
+            <span class="cf">if</span> r2 <span class="op">&lt;</span> <span class="fl">3.1</span>:
+                bonds.append((i, j, r2))
+    <span class="cf">return</span> bonds</code></pre></div>
+<h3 id="四番目のセル">四番目のセル</h3>
+<p>1ステップだけ計算する。原子間に働く力を計算し、速度と位置を更新する。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="kw">def</span> calculate(vx, vy, rx, ry, bonds):
+    dt <span class="op">=</span> <span class="fl">0.01</span>
+    G <span class="op">=</span> <span class="fl">0.2</span>
+    K <span class="op">=</span> <span class="fl">1000.0</span>
+
+    rx <span class="op">+=</span> vx <span class="op">*</span> dt
+    ry <span class="op">+=</span> vy <span class="op">*</span> dt
+    vy <span class="op">-=</span> G <span class="op">*</span> dt
+
+    <span class="cf">for</span> i, j, l <span class="kw">in</span> bonds:
+        dx <span class="op">=</span> rx[j] <span class="op">-</span> rx[i]
+        dy <span class="op">=</span> ry[j] <span class="op">-</span> ry[i]
+        r2 <span class="op">=</span> dx <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> dy <span class="op">**</span> <span class="dv">2</span>
+        f <span class="op">=</span> K <span class="op">*</span> (r2 <span class="op">-</span> l)
+        vx[i] <span class="op">+=</span> f<span class="op">*</span>dx<span class="op">*</span>dt
+        vy[i] <span class="op">+=</span> f<span class="op">*</span>dy<span class="op">*</span>dt
+        vx[j] <span class="op">-=</span> f<span class="op">*</span>dx<span class="op">*</span>dt
+        vy[j] <span class="op">-=</span> f<span class="op">*</span>dy<span class="op">*</span>dt
+
+    <span class="cf">for</span> i, y <span class="kw">in</span> <span class="bu">enumerate</span>(ry):
+        <span class="cf">if</span> y <span class="op">&lt;</span> <span class="fl">0.0</span>:
+            vy[i] <span class="op">-=</span> <span class="fl">10.0</span> <span class="op">*</span> y <span class="op">*</span> dt</code></pre></div>
+<h3 id="番目のセル">5番目のセル</h3>
+<p>後の「写真」のために、原子の位置から画像を作る関数を作っておく。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="kw">def</span> get_img(rx, ry, w, h):
+    img <span class="op">=</span> np.zeros((h,w))
+    <span class="cf">for</span> x,y <span class="kw">in</span> <span class="bu">zip</span>(rx,ry):
+        x <span class="op">=</span> <span class="bu">int</span>(x)
+        y <span class="op">=</span> <span class="bu">int</span>(y)
+        <span class="cf">if</span> x <span class="kw">in</span> <span class="bu">range</span>(w) <span class="kw">and</span> y <span class="kw">in</span> <span class="bu">range</span>(h):
+            img[h<span class="op">-</span>y<span class="op">-</span><span class="dv">1</span>][x] <span class="op">=</span> <span class="fl">1.0</span>
+    <span class="cf">return</span> img</code></pre></div>
+<h3 id="番目のセル-1">6番目のセル</h3>
+<p>シミュレーションを行う。速度を初期化してから<code>calculate</code>を何度も呼び出すことで時間発展をさせる。あとでアニメーションを作るため、100ステップに一度「写真」を撮っておく。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="kw">def</span> simulate(rx, ry, bonds):
+    vx <span class="op">=</span> np.zeros_like(rx)
+    vy <span class="op">=</span> np.zeros_like(rx)
+    w <span class="op">=</span> np.<span class="bu">max</span>(rx).astype(np.<span class="bu">int</span>)
+    h <span class="op">=</span> np.<span class="bu">max</span>(ry).astype(np.<span class="bu">int</span>)
+    imgs <span class="op">=</span> []
+    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2000</span>):
+        <span class="cf">if</span> i <span class="op">%</span> <span class="dv">100</span> <span class="kw">is</span> <span class="dv">0</span>:
+            img <span class="op">=</span> get_img(rx, ry, w, h)
+            imgs.append(img.copy())
+            plt.imshow(img)
+            plt.show()
+        calculate(vx, vy, rx, ry, bonds)
+    <span class="cf">return</span> imgs</code></pre></div>
+<h3 id="番目">7番目</h3>
+<p>ではいよいよシミュレーションしてみよう。例えば32ピクセルのサイズで「スパコン」という文字列の形をした構造を作って、下に落としてみる。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python">rx, ry <span class="op">=</span> get_atoms(<span class="st">&quot;スパコン&quot;</span>,<span class="dv">32</span>)
+bonds <span class="op">=</span> get_bonds(rx, ry)
+imgs <span class="op">=</span> simulate(rx, ry, bonds)</code></pre></div>
+<p>実行すると、次々に「写真」が表示されるであろう。</p>
+<h3 id="番目-1">8番目</h3>
+<p>アニメーションの準備をする。デフォルトの色では味気ないので、カラーマップを<code>plasma</code>に変えてみよう。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python">fig <span class="op">=</span> plt.figure()
+im <span class="op">=</span> plt.imshow(imgs[<span class="dv">0</span>],cmap<span class="op">=</span><span class="st">&quot;plasma&quot;</span>)</code></pre></div>
+<p>実行すると、青字に黄色で文字が表示されたはずである。</p>
+<h3 id="番目のセル-2">9番目のセル</h3>
+<p>撮った写真をまとめてアニメーションを作ろう。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="kw">def</span> update(i):
+    im.set_array(imgs[i])
+
+ani <span class="op">=</span> animation.FuncAnimation(fig, update,frames<span class="op">=</span><span class="bu">len</span>(imgs))
+rc(<span class="st">&#39;animation&#39;</span>, html<span class="op">=</span><span class="st">&#39;jshtml&#39;</span>)
+ani</code></pre></div>
+<p>実行するとコントロールパネルが出るはずなので、再生ボタンを押すことでアニメーションが表示される。</p>
+<p>ここまで成功したら、7番目のセルの文字列をいろいろ変えて実行してみよう。例えば自分の名前などはどうなるだろう？ひらがなやカタカナの方が面白いので試してみよう。</p>
+<h2 id="解説">解説</h2>
+<p>分子動力学法(Molecular Dynamics method, MD)は、原子や分子といった「つぶつぶ」にかかる力を計算し、ニュートンの運動方程式に従って時間発展させる手法である。タンパク質の折りたたみのシミュレーションといったミクロなものから、生物の細胞膜の運動、血流中の赤血球の動きの解析といったミリオーダーの世界、さらには銀河系の衝突などの巨大なスケールまで、様々な研究に用いられている。世の中はすべて原子でできているのだから、十分な数の原子を用意することができればなんでも再現できるはずである。しかし、化学反応を再現するには量子力学が必要だったり、計算機の能力の限界によりあまり多数の原子を扱えないため、「なんでも」は再現できるわけではない。とにかくたくさん「つぶつぶ」があればあるほど再現できる世界が広がるのは想像できるであろう。どんな計算をするかにもよるが、普通のパソコンで計算できるのはせいぜい100万原子くらいまでであろう。100万というと多いように思えるが、三次元なら100x100x100、つまり一辺に100個しか原子がない。原子間距離は0.1ナノメートル程度であるから、たった10ナノの世界しか表現できない。もっと大きな計算がしたいが、どうすればよいだろう？</p>
+<p>普通のパソコンでは100万個しか扱えないが、それは「一台の」パソコンをつかった場合だ。2台あったら200万個、10台あったら1000万個扱えるんじゃないだろうか？こうして、「パソコンをたくさん並べてつないで、大きなコンピュータとして使おう」という発想が生まれる。このようなコンピュータを<strong>スーパーコンピュータ</strong>、略してスパコンと呼ぶ。スパコンを使って、できるだけ大きな計算をして、新しい発見を目指す、それが渡辺の研究である。例えば今年退役する「京」コンピュータは、8万個のパソコン(スパコンではパソコンにあたるものをノードと呼ぶ)をつないで作られた巨大なスパコンだ。渡辺はこの「京」を使って3000億原子までの計算を行った。たくさんのパソコンをつないなものを実行するためには「並列計算」と呼ばれる技術が必要になる。複数のパソコンが通信で情報をやりとりして、一つの大きな計算実行するのが並列計算である。並列計算をするためには、通信部分も自分でプログラムしなければならない。スパコンとは何か、どうやって使うかについて「一週間でなれる！スパコンプログラマ」という記事を書いたので、もしスパコンに興味を持ったら参照してみて欲しい。</p>
+<p>「一週間でなれる！スパコンプログラマ」 <a href="https://kaityo256.github.io/sevendayshpc/" class="uri">https://kaityo256.github.io/sevendayshpc/</a></p>
+</article>
+</body>
+</html>

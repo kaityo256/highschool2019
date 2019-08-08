@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+
+<style>
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+  }
+  img {width: 100%}
+
+  @media (max-width: 767px) {
+    .markdown-body {
+      padding: 15px;
+    }
+  }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://kaityo256.github.io/python_zero/github-markdown.css" type="text/css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<article class="markdown-body">
+<h1 id="テーマ3-ロジスティックマップ">テーマ3: ロジスティックマップ</h1>
+<p><a href="../index.html">[Up]</a> <a href="https://github.com/kaityo256/highschool2019">[Repository]</a></p>
+<h2 id="目的">目的</h2>
+<p>生物の個体数をモデル化し、カオスを実感する。</p>
+<h2 id="モデル">モデル</h2>
+<p>ある生物を考える。この生物は死ぬ直前に子供を生むが、栄養状態が良いとたくさん子供を生めるが、栄養状態が悪いと子供を産めないとする。当然、個体数が多ければ多いほどエサの取り合いになり、子供を生むための栄養を蓄えることができない。逆に、個体数が少なければ競争も少なく、子供もたくさん産めるだろう。この生物の第<span class="math inline">\(i\)</span>世代における生物の個体数を<span class="math inline">\(N_i\)</span>とする時、次世代の個体数<span class="math inline">\(N_{i+1}\)</span>を以下のように表現しよう。</p>
+<p><span class="math display">\[
+N_{i+1} = a \left( 1 - \frac{N_i}{N_\mathrm{max}}\right) N_i
+\]</span></p>
+<p>これは、「前世代で個体数が多いと子供が作れない」「個体数が少ないとたくさん子供を作ることができる」ことを表現した式だ。<span class="math inline">\(N_\mathrm{max}\)</span>は、この環境が許す最大の個体数で、この個体数に達すると子供を作ることができない。さて、<span class="math inline">\(n_i = N_i/N_\mathrm{max}\)</span>という変数変換を考えよう。<span class="math inline">\(n_i\)</span>は「環境が許す最大の個体数を1とした場合の、現在の個体数の割合」を表し、0から1までの値をとる。この変数変換により、先程の式は</p>
+<p><span class="math display">\[
+n_{i+1} = a (1 - n_i) n_i
+\]</span></p>
+<p>と書き直される。この式を<strong>ロジスティックマップ(Logistic map)</strong>と呼ぶ。</p>
+<p><span class="math inline">\(a\)</span>は生物にとっての環境の快適度を表し、小さいと生物はあまり増えられず、大きいと生物は増えやすい。</p>
+<p>さて、この式は「個体数が多いと子供が少なくなる」「個体数が少ないと子供が増える」のであるから、時間がたつと「ちょうど良い」個体数に落ち着くと思われる。もし個体数が落ち着いたら<span class="math inline">\(n_{i+1} = n_i\)</span>なので、これを<span class="math inline">\(n_i\)</span>について解くと、</p>
+<p><span class="math display">\[
+n_i = 1 - \frac{1}{a}
+\]</span></p>
+<p>となる。このように、世代や時間によらない解を<strong>定常解</strong>と呼ぶ。<span class="math inline">\(a\)</span>が1に近づくと個体数が0に、<span class="math inline">\(a\)</span>が大きいほど、環境が許す最大の個体数に近づく。シミュレーションにより、この振る舞いを確認してみよう。</p>
+<h2 id="プログラム">プログラム</h2>
+<h3 id="最初のセル">最初のセル</h3>
+<p>最初のセルはライブラリのインポートを行う。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</code></pre></div>
+<p>実行しておくことを忘れないように。</p>
+<h3 id="番目のセル">2番目のセル</h3>
+<p>最初に<code>a = 1.0</code>の時にどうなるかを見てみよう。以下を入力、実行してみよう。個体数は<code>n</code>で表現し、最初は<code>n = 0.01</code>、つまり環境が許す最大値の1%の生物がいる状態からスタートする。</p>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python">n <span class="op">=</span> <span class="fl">0.01</span>
+a <span class="op">=</span> <span class="fl">1.0</span>
+y <span class="op">=</span> []
+<span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):
+    y.append(n)
+    n <span class="op">=</span> a <span class="op">*</span> n <span class="op">*</span> (<span class="fl">1.0</span> <span class="op">-</span> n)
+plt.ylim(<span class="dv">0</span>,<span class="dv">1</span>)
+plt.plot(y)</code></pre></div>
+<p>個体数が0に張り付いたようなグラフが得られるはずだ。これは先程求めた定常解と一致する。</p>
+<p>次に<span class="math inline">\(a=2.0\)</span>に書き換えて、もう一度実行してみよう。値は理論値である<span class="math inline">\(0.5\)</span>になるだろうか。</p>
+<p>では次に<span class="math inline">\(a=3.0\)</span>ではどうだろう。<span class="math inline">\(a=3.3\)</span>では？</p>
+<h3 id="番目のセル-1">3番目のセル</h3>
+<div class="sourceCode"><pre class="sourceCode py"><code class="sourceCode python">a_s <span class="op">=</span> <span class="fl">1.0</span>
+a_e <span class="op">=</span> <span class="fl">3.3</span>
+N <span class="op">=</span> <span class="dv">1000</span>
+x <span class="op">=</span> []
+y <span class="op">=</span> []
+<span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):
+    a <span class="op">=</span> a_s <span class="op">+</span> (a_e <span class="op">-</span> a_s)<span class="op">/</span>N<span class="op">*</span>i
+    n <span class="op">=</span> <span class="fl">0.1</span>
+    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):
+        n <span class="op">=</span> a <span class="op">*</span> n <span class="op">*</span> (<span class="fl">1.0</span> <span class="op">-</span> n)
+        <span class="cf">if</span> i <span class="op">&gt;</span> <span class="dv">900</span>:
+            x.append(a)
+            y.append(n)
+plt.scatter(x,y, s<span class="op">=</span><span class="fl">0.01</span>)</code></pre></div>
+<p>これを実行すると、パラメータ<code>a</code>に対して、最終的に個体数がどこに落ち着くかをプロットするものだ。</p>
+<h2 id="カオス">カオス</h2>
+<p>物理は、極言すれば「方程式を解く」学問だ。方程式を「解く」とは、現在の情報が与えられた時に、任意の時間や場所での系の振る舞いがわかることだ。例えば我々は次にいつどこで日食や月食が起きるかがわかる。星はニュートンの運動方程式に従って動くことがわかっているため、運動方程式を解くことで太陽や地球、月の将来の位置を予測することができるためだ。このように自分が振る舞いを知りたい系の状態を記述する式を<strong>支配方程式</strong>と呼ぶ。ほとんどの場合、支配方程式は微分方程式で記述される。微分方程式を厳密に解くことは難しいが、数値計算で近似的に解くことはできる。支配方程式さえわかってしまえば、あとは欲しいだけの精度で将来の予測ができる、もう世の中は「わかった」ので、物理はもうあまりやることが残っていない、そう思われた時期があった。</p>
+<p>ロジスティック・マップは、極めて簡単な一次元の差分方程式だ。しかし、その長期的な振る舞いを予測するのは難しい。<span class="math inline">\(a=2\)</span>の場合、定常解は<span class="math inline">\(n_i=1/2\)</span>だ。実際に、十分時間が経過したら、最初にどれだけ生物がいたかなど関係なく<span class="math inline">\(n_i=1/2\)</span>に収束する。しかし、<span class="math inline">\(a=3\)</span>を超えた瞬間、その振る舞いは突如として乱れだす。個体数は振動しはじめ、定常解に収束しなくなる。<span class="math inline">\(a=3.8\)</span>のあたりでは完全に不規則に動くため、<span class="math inline">\(n_1=0.01\)</span>でスタートした時<span class="math inline">\(n_{1000}\)</span>はどのくらいですか？と聞かれても全く予想できない。また、<span class="math inline">\(n_1=0.010001\)</span>と、初期値が少しずれただけでも、あとの振る舞いががらっと変わってしまう。これを<strong>初期値鋭敏性</strong>と呼ぶ。これらの性質をもつ世界を<strong>カオス(Chaos)</strong>と呼ぶ。ロジスティック・マップは、カオスを引き起こす最も単純なモデルの一つだ。</p>
+<p>カオスにより、「非常に単純に見える式」が、「非常に複雑な結果」を生み出すことがわかった。カオスでは、たとえ支配方程式が完璧にわかっていても、系の振る舞いを予想することができない。初期値鋭敏性により、少しでも初期値の見積もりにずれがあると、あとで大きなずれになってしまうからだ。初期値鋭敏性は、例えば天気の長期予報を困難にする。例えば、あるところで蝶が羽ばたいた、たったそれだけのことが、遠くで重大な気象変化につながるかもしれない。これをバタフライ・エフェクトと呼ぶ。</p>
+<p>カオスにより、我々の「世界に対する見方」が大きく変わった。「非常に単純に見える式」が、「非常に複雑な結果」を生み出すのなら、「非常に複雑に見える現象」の裏に「非常に簡単な式」が隠れているかもしれない。物理学者はその可能性を求め、今日も現象の裏に潜む普遍性を追究するのである。</p>
+</article>
+</body>
+</html>
