@@ -25,7 +25,7 @@ from matplotlib import animation, rc
 
 ```py
 def get_atoms(text, fontsize):
-    myfont = ImageFont.truetype("fonts/ipaexg.ttf", fontsize)
+    myfont = ImageFont.truetype("ipaexg.ttf", fontsize)
     img = Image.new('1', (200, 200), 'white')
     draw = ImageDraw.Draw(img)
     draw.text((10, 10), text, font=myfont)
@@ -45,6 +45,8 @@ def get_atoms(text, fontsize):
     ny -= np.min(ny)
     return nx, ny
 ```
+
+なお、事前にIPAフォント`ipaexg.ttf`をカレントディレクトリに置いておく必要がある。
 
 ### 三番目のセル
 
